@@ -1,7 +1,5 @@
 # hichain
 
-// TODO
-
 # Contributing
 1. `git checkout -b feature/<feature_name>`
 2. Write some code
