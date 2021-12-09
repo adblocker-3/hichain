@@ -27,16 +27,20 @@ if (!(await syncWallet.isSigningKeySet())) {
     await changePubkey.awaitReceipt();
   }
 
+string claim = "0.999"; // update accordingly
+string gas = "0.001";
+
 // withdraw funds
 const withdraw = await syncWallet2.withdrawFromSyncToEthereum({
     ethAddress: ethWallet2.address,
     token: "ETH",
-    amount: ethers.utils.parseEther("0.998"),
+    amount: ethers.utils.parseEther(claim),
   });
 
 // receipt
 await withdraw.awaitVerifyReceipt();
 
+const erc20Id = await ethProxy.resolveTokenId("0xFab46E002BbF0b4509813474841E0716E6730136"); // update accordingly
 
 const syncHttpProvider = await zksync.getDefaultProvider("localhost");
 const signedTransferTx = {
@@ -44,9 +48,9 @@ const signedTransferTx = {
   type: "Transfer",
   from: "0x..address1",
   to: "0x..address2",
-  token: 0, // id of the ETH token
-  amount: "1000000000000000000", // 1 Ether in Wei
-  fee: "10000000000000000", // 0.01 Ether in Wei
+  token: erc20Id,
+  amount: claim,
+  fee: gas,
   nonce: 0,
   signature: {
     pubKey: "dead..", // hex encoded packed public key of signer (32 bytes)
