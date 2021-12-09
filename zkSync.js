@@ -1,9 +1,8 @@
 // dependencies
-yarn add zksync
-yarn add ethers # ethers is a peer dependency of zksync
+// yarn add zksync
+// yarn add ethers # ethers is a peer dependency of zksync
 
 import * as zksync from "zksync";
-import { Wallet } from "zksync";
 
 // connect to zkSync network
 const syncProvider = await zksync.getDefaultProvider("rinkeby");
