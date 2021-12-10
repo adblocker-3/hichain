@@ -1,0 +1,29 @@
+import json
+from web3 import Web3, HTTPProvider
+# truffle development blockchain address
+blockchain_address = 'http://127.0.0.1:8545'
+# Client instance to interact with the blockchain
+web3 = Web3(HTTPProvider(blockchain_address))
+
+contract_address = '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3'
+contract_checksum_address = Web3.toChecksumAddress(contract_address)
+contract_abi = '[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"MaxApprove","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"TransferOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"_burnaddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"_feeBurn","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint8","name":"_owned","type":"uint8"}],"name":"renouncedOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"BurnFee","type":"uint256"}],"name":"setTaxFeePercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}]'
+sender_address = '0x0835D4a1494905fb3f9fEa60ADcbb937ED2fEbf3'
+sender_private_key = 'ede7b538f9bea69191691d06ac1877e6b3f55c1335db60579d8ec293a93adf21'
+reciever_address = '0x098F13Eb5D9e57C4Cdccf29e6232dFdF06D44801'
+
+contract = web3.eth.contract(address = contract_checksum_address, abi = contract_abi)
+
+nonce = web3.eth.getTransactionCount(sender_address)
+def TransferMIM():
+  tx = contract.functions.transfer('0x098F13Eb5D9e57C4Cdccf29e6232dFdF06D44801', Web3.toWei(20,'ether')).buildTransaction({'gas': 70000, 'gasPrice': Web3.toWei('1','gwei'), 'nonce': nonce})
+  signed_tx = web3.eth.account.sign_transaction(tx, sender_private_key)
+  tx_hash = web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+  print(web3.toHex(tx_hash))
+
+
+TransferMIM()
+
+# how to get value from reciept
+#txvalue = web3.eth.abi.decodeLog([{ type: 'uint256', name: 'value' }],"0x000000000000000000000000000000000000000000000001158e460913d00000")
+#txvalue.value
