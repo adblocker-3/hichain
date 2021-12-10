@@ -4,17 +4,15 @@
 
 import * as zksync from "zksync";
 
-const contractAddress = "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3";
-const contract = new Web3Client.eth.Contract(contractABI, contractAddress);
-
 const senderAddress = "0x0835D4a1494905fb3f9fEa60ADcbb937ED2fEbf3";
 const senderPrivateKey = "ede7b538f9bea69191691d06ac1877e6b3f55c1335db60579d8ec293a93adf21";
 const recieverAddress = "0x098F13Eb5D9e57C4Cdccf29e6232dFdF06D44801";
+const payment = "0.999";
+const gas = "0.001";
 
 // connect to zkSync network
 const syncProvider = await zksync.getDefaultProvider("localhost");
 const ethersProvider = ethers.getDefaultProvider("localhost");
-
 
 // zkSync authentication
 if (!(await syncWallet.isSigningKeySet())) {
@@ -34,33 +32,34 @@ if (!(await syncWallet.isSigningKeySet())) {
     await changePubkey.awaitReceipt();
   }
 
-string claim = "0.999"; // update accordingly
-string gas = "0.001";
+// making transfer in zksync
+const ethWallet = ethers.Wallet.fromMnemonic(MNEMONIC).connect(ethersProvider);
+const syncWallet = await zksync.Wallet.fromEthSigner(ethWallet, syncProvider);
 
-// withdraw funds
-const withdraw = await syncWallet2.withdrawFromSyncToEthereum({
-    ethAddress: ethWallet2.address,
-    token: "ETH",
-    amount: ethers.utils.parseEther(claim),
-  });
+const ethWallet2 = ethers.Wallet.fromMnemonic(MNEMONIC2).connect(ethersProvider);
+const syncWallet2 = await zksync.SyncWallet.fromEthSigner(ethWallet2, syncProvider);
 
-// receipt
-await withdraw.awaitVerifyReceipt();
+const transfer = await syncWallet.syncTransfer({
+  to: syncWallet2.address(),
+  token: "ETH",
+  amount: zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther(payment)),
+  fee: zksync.utils.closestPackableTransactionFee(ethers.utils.parseEther(gas)),
+});
+
+const transferReceipt = await transfer.awaitReceipt();
 
 const erc20Id = await ethProxy.resolveTokenId("0xFab46E002BbF0b4509813474841E0716E6730136"); // update accordingly
-
-const nounce_no =  Web3Client.eth.getTransactionCount(senderAddress)
 
 const syncHttpProvider = await zksync.getDefaultProvider("localhost");
 const signedTransferTx = {
   accountId: 13, // id of the sender account in the zkSync
   type: "Transfer",
-  from: senderAddress,
-  to: recieverAddress,
+  from: "0x..address1",
+  to: "0x..address2",
   token: erc20Id,
-  amount: claim,
+  amount: payment,
   fee: gas,
-  nonce: nounce_no,
+  nonce: 0,
   signature: {
     pubKey: "dead..", // hex encoded packed public key of signer (32 bytes)
     signature: "beef..", // hex encoded signature of the tx (64 bytes)
