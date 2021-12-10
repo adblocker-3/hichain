@@ -37,10 +37,10 @@ if (!(await syncWallet.isSigningKeySet())) {
   }
 
 // making transfer in zksync
-const ethWallet = ethers.Wallet.fromMnemonic(MNEMONIC).connect(ethersProvider);
+const ethWallet = ethers.Wallet.fromMnemonic(policyHolderAddress).connect(ethersProvider);
 const syncWallet = await zksync.Wallet.fromEthSigner(ethWallet, syncProvider);
 
-const ethWallet2 = ethers.Wallet.fromMnemonic(MNEMONIC2).connect(ethersProvider);
+const ethWallet2 = ethers.Wallet.fromMnemonic(insuranceCompanyAddress).connect(ethersProvider);
 const syncWallet2 = await zksync.SyncWallet.fromEthSigner(ethWallet2, syncProvider);
 
 const transfer = await syncWallet.syncTransfer({
@@ -71,13 +71,6 @@ const signedTransferTx = {
   },
 };
 
-// const readableTxInfo =
-//     `Transfer 1.0 ETH\n` +
-//     `To: 0x..address2\n` +
-//     `Nonce: 0\n` +
-//     `Fee: 0.01 ETH\n` +
-//     `Account Id: 13`;
 const ethSignature = "0xdddaaa...1c"; // Ethereum ECDSA signature of the readableTxInfo
 
-const transactionHash = await syncHttpProvider.submitTx(signedTransferTx, ethSignature);
-// 0x..hash (32 bytes)
+const transactionHash = await syncHttpProvider.submitTx(signedTransferTx, ethSignature); // 0x..hash (32 bytes)

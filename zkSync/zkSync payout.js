@@ -36,6 +36,10 @@ if (!(await syncWallet.isSigningKeySet())) {
     await changePubkey.awaitReceipt();
   }
 
+
+const ethWallet2 = ethers.Wallet.fromMnemonic(insuranceCompanyAddress).connect(ethersProvider);
+const syncWallet2 = await zksync.SyncWallet.fromEthSigner(ethWallet2, syncProvider);
+
 // withdraw funds
 const withdraw = await syncWallet2.withdrawFromSyncToEthereum({
     ethAddress: ethWallet2.address,
@@ -65,13 +69,6 @@ const signedTransferTx = {
   },
 };
 
-// const readableTxInfo =
-//     `Transfer 1.0 ETH\n` +
-//     `To: 0x..address2\n` +
-//     `Nonce: 0\n` +
-//     `Fee: 0.01 ETH\n` +
-//     `Account Id: 13`;
 const ethSignature = "0xdddaaa...1c"; // Ethereum ECDSA signature of the readableTxInfo
 
-const transactionHash = await syncHttpProvider.submitTx(signedTransferTx, ethSignature);
-// 0x..hash (32 bytes)
+const transactionHash = await syncHttpProvider.submitTx(signedTransferTx, ethSignature); // 0x..hash (32 bytes)
