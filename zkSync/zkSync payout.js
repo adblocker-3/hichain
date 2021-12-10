@@ -3,10 +3,13 @@
 // yarn add ethers # ethers is a peer dependency of zksync
 
 import * as zksync from "zksync";
+const Web3 = require("web3");
+const provider = "http://127.0.0.1:8545";
+const Web3Client = new Web3(new Web3.providers.HttpProvider(provider));
 
-const senderAddress = "0x0835D4a1494905fb3f9fEa60ADcbb937ED2fEbf3";
-const senderPrivateKey = "ede7b538f9bea69191691d06ac1877e6b3f55c1335db60579d8ec293a93adf21";
-const recieverAddress = "0x098F13Eb5D9e57C4Cdccf29e6232dFdF06D44801";
+const policyHolderAddress = "0x0835D4a1494905fb3f9fEa60ADcbb937ED2fEbf3";
+const policyHolderPrivateKey = "ede7b538f9bea69191691d06ac1877e6b3f55c1335db60579d8ec293a93adf21";
+const insuranceCompanyAddress = "0x098F13Eb5D9e57C4Cdccf29e6232dFdF06D44801";
 const erc20Id = await ethProxy.resolveTokenId("0xFab46E002BbF0b4509813474841E0716E6730136"); // TODO
 const claim = "0.999";
 const gas = "0.001";
@@ -14,7 +17,6 @@ const gas = "0.001";
 // connect to zkSync network
 const syncProvider = await zksync.getDefaultProvider("localhost");
 const ethersProvider = ethers.getDefaultProvider("localhost");
-
 
 // zkSync authentication
 if (!(await syncWallet.isSigningKeySet())) {
@@ -44,18 +46,19 @@ const withdraw = await syncWallet2.withdrawFromSyncToEthereum({
 // receipt
 await withdraw.awaitVerifyReceipt();
 
-const nounce_no =  Web3Client.eth.getTransactionCount(senderAddress)
+const nounce_num =  Web3Client.eth.getTransactionCount(insuranceCompanyAddress)
+const senderAccountId = async getAccountId(): Promise<number | undefined>;
 
 const syncHttpProvider = await zksync.getDefaultProvider("localhost");
 const signedTransferTx = {
-  accountId: 13, // id of the sender account in the zkSync
+  accountId: senderAccountId,
   type: "Transfer",
-  from: senderAddress,
-  to: recieverAddress,
+  from: insuranceCompanyAddress,
+  to: policyHolderAddress,
   token: erc20Id,
   amount: claim,
   fee: gas,
-  nonce: nounce_no,
+  nonce: nounce_num,
   signature: {
     pubKey: "dead..", // hex encoded packed public key of signer (32 bytes)
     signature: "beef..", // hex encoded signature of the tx (64 bytes)
