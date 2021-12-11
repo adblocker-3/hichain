@@ -10,7 +10,7 @@ const Web3Client = new Web3(new Web3.providers.HttpProvider(provider));
 const policyHolderAddress = "0x0835D4a1494905fb3f9fEa60ADcbb937ED2fEbf3";
 const policyHolderPrivateKey = "ede7b538f9bea69191691d06ac1877e6b3f55c1335db60579d8ec293a93adf21";
 const insuranceCompanyAddress = "0x098F13Eb5D9e57C4Cdccf29e6232dFdF06D44801";
-const erc20Id = await ethProxy.resolveTokenId("0xFab46E002BbF0b4509813474841E0716E6730136"); // TODO
+const erc20Id = 2; // ethProxy.resolveTokenId("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"); // TODO
 const claim = "0.999";
 const gas = "0.001";
 
