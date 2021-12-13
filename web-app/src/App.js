@@ -1,29 +1,28 @@
 import React from 'react';
-import Navbar from './Navbar';
-import './App.css';
-import Login from './components/Login';
-import Settings from './components/Settings';
-import Policies from './components/Policies';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import './App.css';
+
+import LandingPage from './components/LandingPage'
+import LoginPage from './components/SignIn'
+import RegisterPage from './components/Register'
+import ForgetPasswordPage from './components/ForgetPassword'
+import Policies from './components/Policies'
+import Settings from './components/Settings';
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Navbar />
-        <div className="content">
+      <div>
           <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/Settings">
-              <Settings />
-            </Route>
-            <Route path="/Policies">
-              <Policies />
-            </Route>
+              <Route exact path="/" component={ LandingPage } />
+              <Route path="/login" component={ LoginPage } />
+              <Route path="/register" component={ RegisterPage } />
+              <Route path="/forget-password" component={ ForgetPasswordPage } />
+              <Route path="/home" component={ Policies } />
+              <Route path="/policies" component={ Policies } />
+              <Route path="/settings" component={ Settings } />
           </Switch>
-        </div>
       </div>
     </Router>
   );
