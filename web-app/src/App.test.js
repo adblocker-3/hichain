@@ -1,17 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import renderer from 'react-test-renderer'
-import App from './App'
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-jest.mock('components/web3/Web3Loader')
-
-it('renders without crashing', async () => {
-  const div = document.createElement('div')
-  await ReactDOM.render(<App />, div)
-})
-
-it('renders correctly', async () => {
-  const app = await renderer
-    .create(<App />)
-  expect(app.toJSON()).toMatchSnapshot()
-})
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});

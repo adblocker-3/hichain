@@ -1,32 +1,25 @@
-import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Home } from 'pages/home'
-import { Accounts } from 'pages/accounts'
-import { DApp } from 'pages/dapp'
-import { Web3Loader } from 'components/web3'
+import logo from './logo.svg';
+import './App.css';
 
-const renderComponent = (Component, routeProps, web3Props) => (
-  <Component {...web3Props}
-    {...routeProps} />
-)
-
-const web3IsReady = ({web3, accounts, contract}) => {
-  return (web3 && accounts && contract)
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
 }
 
-export default () =>
-  <Router>
-    <Web3Loader render={web3Props => {
-      if (web3IsReady(web3Props)) {
-        return (
-          <div>
-            <Route exact path='/' component={Home} />
-            <Route path='/dapp' render={routeProps => renderComponent(DApp, routeProps, web3Props)} />
-            <Route path='/accounts' render={routeProps => renderComponent(Accounts, routeProps, web3Props)} />
-          </div>
-        )
-      } else {
-        return <p>Loading web3, accounts, and contract.</p>
-      }
-    }} />
-  </Router>
+export default App;
