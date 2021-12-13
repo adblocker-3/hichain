@@ -3,7 +3,6 @@ import Navbar from '../Navbar';
 
 function Policies(){
     return(
-        
         <div>
             <Navbar></Navbar>
             <h1>
