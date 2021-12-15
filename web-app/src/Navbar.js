@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
+import HiChainLogo from './assets/logo.png'
 
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <h1>HiChain</h1>
+      <h1 style={ LogoStyle }> </h1>
       <div className="links">
         <Link to="/policies">
           Insurance
         </Link>
-        <Link to="/policies">
+        <Link to="/health">
           Health
         </Link>
-        <Link to="/policies">
+        <Link to="/wallet">
           Wallet
         </Link>
         <Link to="/settings">
@@ -24,5 +25,13 @@ const Navbar = () => {
     </nav>
   );
 }
- 
+
+const LogoStyle = {
+  width: "100px",
+  height: "100px",
+  background: `url(${HiChainLogo})`,
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover"
+}
+
 export default Navbar;

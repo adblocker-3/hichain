@@ -27,7 +27,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.2",
     "snazzy": "^7.1.1",
     "standard": "^11.0.1"
   },

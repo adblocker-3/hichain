@@ -2,10 +2,10 @@ import React from 'react';
 import Navbar from '../Navbar';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import MyPolicies from './MyPolicies';
-import AddOns from './AddOns';
+import Balance from './Balance';
+import History from './History';
 
-function Policies(){
+function Wallet(){
     return(
         <div>
             <Navbar></Navbar>
@@ -14,19 +14,19 @@ function Policies(){
             onChange={(tabId) => { console.log(tabId) }}
             >
                 <TabList>
-                <Tab tabFor="one">My Policies</Tab>
-                <Tab tabFor="two">Add-ons</Tab>
+                <Tab tabFor="one">Balance</Tab>
+                <Tab tabFor="two">History</Tab>
                 </TabList>
 
                 <TabPanel tabId="one">
-                    <MyPolicies></MyPolicies>
+                    <Balance></Balance>
                 </TabPanel>
                 <TabPanel tabId="two">
-                    <AddOns></AddOns>
+                    <History></History>
                 </TabPanel>
             </Tabs>
         </div>
     );
 }
 
-export default Policies;
+export default Wallet;

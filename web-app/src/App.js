@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
-import LandingPage from './components/LandingPage'
-import Login from './components/Login'
-import Register from './components/Register'
-import ForgetPassword from './components/ForgetPassword'
-import Policies from './components/Policies'
+import LandingPage from './components/LandingPage';
+import Login from './components/Login';
+import Register from './components/Register';
+import ForgetPassword from './components/ForgetPassword';
+import Policies from './components/Policies';
+import Health from './components/Health';
+import Wallet from './components/Wallet';
 import Settings from './components/Settings';
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
               <Route path="/forget-password" component={ ForgetPassword } />
               <Route path="/home" component={ Policies } />
               <Route path="/policies" component={ Policies } />
+              <Route path="/health" component={ Health } />
+              <Route path="/wallet" component={ Wallet } />
               <Route path="/settings" component={ Settings } />
           </Switch>
       </div>

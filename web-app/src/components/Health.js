@@ -2,10 +2,9 @@ import React from 'react';
 import Navbar from '../Navbar';
 import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
-import MyPolicies from './MyPolicies';
-import AddOns from './AddOns';
+import Status from './Status'
 
-function Policies(){
+function Health(){
     return(
         <div>
             <Navbar></Navbar>
@@ -14,19 +13,15 @@ function Policies(){
             onChange={(tabId) => { console.log(tabId) }}
             >
                 <TabList>
-                <Tab tabFor="one">My Policies</Tab>
-                <Tab tabFor="two">Add-ons</Tab>
+                <Tab tabFor="one">My Status</Tab>
                 </TabList>
 
                 <TabPanel tabId="one">
-                    <MyPolicies></MyPolicies>
-                </TabPanel>
-                <TabPanel tabId="two">
-                    <AddOns></AddOns>
+                    <Status></Status>
                 </TabPanel>
             </Tabs>
         </div>
     );
 }
 
-export default Policies;
+export default Health;
