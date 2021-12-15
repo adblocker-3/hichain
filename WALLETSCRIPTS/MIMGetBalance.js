@@ -2,7 +2,8 @@
 
 const Web3 = require("web3");
 
-const provider = "http://127.0.0.1:8545";
+const provider =
+  "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
 
 const Web3Client = new Web3(new Web3.providers.HttpProvider(provider));
 
@@ -214,15 +215,15 @@ const contract_abi = [
     type: "function",
   },
 ];
-const tokenAddress = "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3";
-const walletAddress = "0x0835D4a1494905fb3f9fEa60ADcbb937ED2fEbf3";
+const tokenAddress = "0xeb8f08a975ab53e34d8a0330e0d34de942c95926";
+const walletAddress = "0xd9A0c0e6205b60256ADB67F72E9A86bC142a30d2";
 
 const contract = new Web3Client.eth.Contract(contract_abi, tokenAddress);
 
 async function getBalance() {
   const result = await contract.methods.balanceOf(walletAddress).call(); // 29803630997051883414242659
 
-  const format = Web3Client.utils.fromWei(result); // 29803630.997051883414242659
+  const format = Web3Client.utils.fromWei(result, "mwei"); // 29803630.997051883414242659
 
   console.log(format);
 }

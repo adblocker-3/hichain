@@ -1,27 +1,49 @@
 //index.js
 
 const Web3 = require("web3");
+const crypto = require("crypto");
+const bip39 = require("bip39");
+const ethers = require("ethers");
 
 const provider = "http://127.0.0.1:8545";
 
 const Web3Client = new Web3(new Web3.providers.HttpProvider(provider));
 
-const newAccount = Web3Client.eth.accounts.create();
+function CreateMnemonic() {
+  const bytes = crypto.randomBytes(16);
+  const buffer = Buffer.from(bytes);
+  const mnemonic = bip39.entropyToMnemonic(bytes.toString("hex"));
+  return mnemonic;
+}
 
-const password = "123456789";
+function ConfirmMnemonic(mnemonic, usermnemonic) {
+  return mnemonic === usermnemonic;
+}
 
-const newAccountEncrypted = Web3Client.eth.accounts.encrypt(
-  newAccount.privateKey,
-  password
-);
+function NewWalletFromMnemonic(mnemonic) {
+  const wallet = ethers.Wallet.fromMnemonic(mnemonic);
+  return wallet;
+}
 
-const newAccountDecrypted = Web3Client.eth.accounts.decrypt(
-  newAccountEncrypted,
-  password
-);
+function EncryptWallet(wallet, password) {
+  const EncryptedWallet = Web3Client.eth.accounts.encrypt(
+    wallet.privateKey,
+    password
+  );
+  return EncryptedWallet;
+}
 
-//you can store newAccountEncrypted in a database
+function DecryptWallet(EncryptedWallet, password) {
+  const wallet = Web3Client.eth.accounts.decrypt(EncryptedWallet, password);
+  return wallet;
+}
 
-console.log(newAccountEncrypted);
+var mnemonic = CreateMnemonic();
 
-console.log(newAccountDecrypted);
+var wallet = NewWalletFromMnemonic(mnemonic);
+
+console.log(wallet.privateKey);
+
+var EncryptedWallet = EncryptWallet(wallet, "123456789");
+
+console.log(EncryptedWallet);
