@@ -19,9 +19,8 @@ async function asyncCall() {
   const insuranceCompanyAddress = "0x1173f173F5A86BCDA22c74F78463BD5899EaecA1";
   const insuranceCompanyPrivateKey =
     "87fd3fda64b1e556daf32d0d60daae262bcbb511fe026afcf088ead06cc850c6";
-  const erc20Id = 2; //ethProxy.resolveTokenId("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"); // TODO
+
   const payment = "1000";
-  const gas = "0.001";
 
   // connect to zkSync network
   const syncProvider = await zksync.getDefaultProvider("rinkeby");
