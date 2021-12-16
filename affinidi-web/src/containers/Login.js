@@ -18,23 +18,10 @@ export default function Login(props) {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        // let networkMember;
+        let networkMember;
         try {
-            // networkMember = await window.sdk.fromLoginAndPassword(username, password)
-            const options = {
-                env: "staging",
-                accessApiKey: accessApiKey,
-            };
-            const wallet = await AffinidiWallet.logInWithPassword(
-                options,
-                username,
-                password
-            );
-            const did = wallet.did;
-            console.log("did: " + did);
-            const credentials = await wallet.getCredentials(null);
-            console.log("creds: " + credentials);
-            if (wallet) {
+            networkMember = await window.sdk.fromLoginAndPassword(username, password)
+            if (networkMember) {
                 props.userHasAuthenticated(true);
             }
 

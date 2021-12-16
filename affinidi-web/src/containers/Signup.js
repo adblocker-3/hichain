@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {Link} from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { Link } from "react-router-dom";
 import { Checkbox, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
 import './Signup.css'
@@ -47,11 +47,11 @@ export default function Signup(props) {
       <form className='Form' onSubmit={handleSignup}>
         <h1 className='Title'>Create account</h1>
         <p className='Info'>
-          Welcome to your personal wallet. Here you will be able to store, view and manage your digital identity.
-          <br/><br/>
+          Welcome to HiChain!
+          <br /><br />
           In order to access your wallet you will need to set up a password first
         </p>
-        { isUserNameFieldVisible &&
+        {isUserNameFieldVisible &&
           <FormGroup controlId='username' bsSize='large'>
             <ControlLabel className='Label'>Username</ControlLabel>
             <FormControl
@@ -59,7 +59,7 @@ export default function Signup(props) {
               className='Input'
               type='username'
               value={username}
-              onChange={ event => setUsername(event.target.value) }
+              onChange={event => setUsername(event.target.value)}
             />
           </FormGroup>
         }
@@ -68,7 +68,7 @@ export default function Signup(props) {
           <FormControl
             className='Input'
             value={password}
-            onChange={ event => setPassword(event.target.value) }
+            onChange={event => setPassword(event.target.value)}
             type='password'
           />
         </FormGroup>
@@ -77,7 +77,7 @@ export default function Signup(props) {
           <FormControl
             className='Input'
             value={confirmPassword}
-            onChange={ event => setConfirmPassword(event.target.value) }
+            onChange={event => setConfirmPassword(event.target.value)}
             type='password'
           />
         </FormGroup>
