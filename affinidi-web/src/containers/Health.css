@@ -1,0 +1,26 @@
+@media all and (min-width: 480px) {
+    .H1 {
+      font-family: Poppins, sans-serif;
+      font-style: normal;
+      width: 100%;
+      padding: 35px 0;
+      background-color: #F1F1F1;
+    }
+    .H1 .U2 {
+      font-size: 14px;
+      text-align: left;
+      margin: 0 auto;
+      max-width: 400px;
+      display:run-in;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      background-color: #FFFFFF;
+      padding: 30px;
+    }
+    .H1 .U2 .Title {
+      font-size: 18px;
+      margin: 0 auto;
+      font-weight: bold;
+      text-align: center;
+      max-width: fit-content;
+    }
+  }

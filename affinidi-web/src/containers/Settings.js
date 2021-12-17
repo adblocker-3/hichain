@@ -1,9 +1,10 @@
 import React from 'react';
+import "./Settings.css";
 
 function Settings(){
     return(
         <div>
-            <ul>
+            <ul className='U1'>
                 <li>
                     <a href="https://google.com" target="_blank" rel="noopener noreferrer">Account Information</a>
                 </li>
@@ -15,8 +16,11 @@ function Settings(){
                 </li>
             </ul>
             <br></br>
-            <button className="primary-button">Discard Changes</button>
-            <button className="primary-button">Save</button>
+            <div className='btn-container'>
+                <button className="btn">Discard Changes</button>
+                <button className="btn">Save</button>
+            </div>
+            
         </div>
     );
 }
