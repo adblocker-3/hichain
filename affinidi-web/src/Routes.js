@@ -10,6 +10,11 @@ import AcceptCredential from "./containers/AcceptCredentials";
 import Signup from "./containers/Signup";
 import Wallet from "./containers/Wallet";
 
+// import navbar links
+import Policies from './containers/Policies';
+import Health from './containers/Health';
+import Settings from './containers/Settings';
+
 export default function Routes({ appProps }) {
   return (
     <Switch>
@@ -37,6 +42,24 @@ export default function Routes({ appProps }) {
         path="/wallet"
         exact
         component={Wallet}
+        appProps={appProps}
+      />
+      <AppliedRoute
+        path="/policies"
+        exact
+        component={Policies}
+        appProps={appProps}
+      />
+      <AppliedRoute
+        path="/health"
+        exact
+        component={Health}
+        appProps={appProps}
+      />
+      <AppliedRoute
+        path="/settings"
+        exact
+        component={Settings}
         appProps={appProps}
       />
       {/* <AppliedRoute path='/policies' exact component={Policies} appProps={appProps} /> */}

@@ -1,5 +1,4 @@
-import React from 'react'
-import './Border.css';
+import React from 'react';
 
 export default function AddOns() {
     return (
