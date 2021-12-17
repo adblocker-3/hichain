@@ -232,24 +232,88 @@ const contract = new Web3Client.eth.Contract(contract_abi, tokenAddress);
 async function getBalance() {
   const result = await contract.methods.balanceOf(walletAddress).call(); // 29803630997051883414242659
 
-  const format = await Web3Client.utils.fromWei(result, "mwei"); // 29803630.997051883414242659
+  const USDC = await Web3Client.utils.fromWei(result, "mwei"); // 29803630.997051883414242659
+  let ETH = await Web3Client.eth.getBalance(walletAddress);
+  ETH = await ethers.utils.formatEther(ETH);
 
-  return format;
+  return [USDC, ETH];
 }
 
 export default function ManageWallet() {
   async function newgetBalance() {
-    let newbalance = await getBalance();
-    console.log(newbalance);
-    setL1balance(newbalance);
+    let balance = await getBalance();
+
+    console.log(balance[0]);
+    setL1balanceUSDC(balance[0]);
+    setL1balanceETH(balance[1]);
   }
   newgetBalance();
-  const [L1balance, setL1balance] = useState(0);
+  const [L1balanceUSDC, setL1balanceUSDC] = useState(0);
+  const [L1balanceETH, setL1balanceETH] = useState(0);
   const [L2balance, setL2balance] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [showPublicAddress, setshowPublicAddress] = useState(false);
   const [password, setPassword] = useState("");
+
+  const [show2ndAddress, setshow2ndAddress] = useState(false);
+  const [_2ndaddress, set2ndAddress] = useState("");
+  const [showTransferAmount, setShowTransferAmount] = useState(false);
+  const [transferAmount, setTransferAmount] = useState("");
+  const [showValueBox, setShowValueBox] = useState(false);
+
   const showingbalance = () => {
     setShowPassword(true);
+  };
+  const showingaddress = () => {
+    setshowPublicAddress(true);
+  };
+  const showingwithdrawal = () => {
+    setShowTransferAmount(true);
+  };
+  const handle_2ndaddress = () => {
+    setshow2ndAddress(false);
+    setShowPassword2(true);
+  };
+  const handleTransferAmount = () => {
+    setshow2ndAddress(true);
+    setShowTransferAmount(false);
+  };
+  const showValueBoxEvent = () => {
+    setShowValueBox(true);
+  };
+  const USDCevent = () => {
+    setShowValueBox(false);
+  };
+  const Transaction = async () => {
+    try {
+      const nonce = Web3Client.eth.getTransactionCount(walletAddress);
+      const data = contract.methods
+        .transfer(
+          _2ndaddress,
+          Web3Client.utils.toWei(transferAmount.toString(), "Mwei")
+        )
+        .encodeABI();
+      const tx = {
+        to: tokenAddress,
+        gas: 70000,
+        gasPrice: Web3Client.utils.toWei("100", "gwei"),
+        data: data,
+        nonce: nonce,
+      };
+      const signed_tx = Web3Client.eth.accounts
+        .signTransaction(
+          tx,
+          DecryptWallet(localStorage.getItem("myWallet"), password).privateKey
+        )
+        .then((signed_tx) =>
+          Web3Client.eth.sendSignedTransaction(signed_tx.rawTransaction)
+        );
+      setShowPassword2(false);
+      console.log("success!");
+    } catch (err) {
+      console.log(err);
+    }
   };
   const showL2balance = async () => {
     try {
@@ -257,6 +321,7 @@ export default function ManageWallet() {
         localStorage.getItem("myWallet"),
         password
       ).privateKey;
+      console.log(walletAddress);
       console.log(walletPrivateKey);
       const syncProvider = await zksync.getDefaultProvider("rinkeby");
       const ethersProvider = await ethers.getDefaultProvider(provider);
@@ -274,6 +339,7 @@ export default function ManageWallet() {
           .toString()
       );
       console.log(L2balance);
+      setShowPassword(false);
     } catch (err) {
       console.log(err);
     }
@@ -281,13 +347,53 @@ export default function ManageWallet() {
 
   return (
     <div>
-      <h3>L1 Balance: {L1balance}</h3>
-      <button className="primary-button">Deposit</button>
-      <button className="primary-button">Withdraw</button>
+      <h3>L1 Balance ETH: {L1balanceETH}</h3>
+      <h3>L1 Balance USDC: {L1balanceUSDC}</h3>
+      <button className="primary-button" onClick={showingaddress}>
+        Deposit
+      </button>
+      <button className="primary-button" onClick={showingwithdrawal}>
+        Withdraw
+      </button>
+      {showPublicAddress && <div>My public address: {walletAddress}</div>}
+      {showTransferAmount && (
+        <>
+          <Input
+            placeholder="Input amount of USDC to send"
+            onChange={(event) => setTransferAmount(event.target.value)}
+            onPressEnter={(event) => handleTransferAmount()}
+          ></Input>
+        </>
+      )}
+      {show2ndAddress && (
+        <>
+          <Input
+            placeholder="Input address to send to"
+            onChange={(event) => set2ndAddress(event.target.value)}
+            onPressEnter={(event) => handle_2ndaddress()}
+          ></Input>
+        </>
+      )}
+      {showPassword2 && (
+        <>
+          <Input.Password
+            placeholder="Type your wallet password"
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+            onChange={(event) => setPassword(event.target.value)}
+            onPressEnter={(event) => Transaction()}
+          ></Input.Password>
+        </>
+      )}
       <br></br>
       <h3>L2 Balance: {L2balance}</h3>
-      <button className="primary-button">Top-Up</button>
-      <button className="primary-button">Withdraw</button>
+      <button className="primary-button" onClick={showValueBoxEvent}>
+        Top-Up
+      </button>
+      <button className="primary-button" onClick={showValueBoxEvent}>
+        Withdraw
+      </button>
       <button className="primary-button" onClick={showingbalance}>
         Show Balance
       </button>
@@ -301,6 +407,17 @@ export default function ManageWallet() {
             onChange={(event) => setPassword(event.target.value)}
             onPressEnter={(event) => showL2balance()}
           ></Input.Password>
+        </>
+      )}
+      {showValueBox && (
+        <>
+          <Input
+            placeholder="Enter Amount of USDC"
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+            onPressEnter={(event) => USDCevent()}
+          ></Input>
         </>
       )}
     </div>

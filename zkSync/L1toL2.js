@@ -16,7 +16,26 @@ async function L1toL2() {
   const ethWallet = new ethers.Wallet(policyHolderPrivateKey, ethersProvider);
   const syncWallet = await zksync.Wallet.fromEthSigner(ethWallet, syncProvider);
 
-  const amount = "100";
+  // if (!(await syncWallet.isSigningKeySet())) {
+  //   if (syncWallet.getAccountId() == undefined) {
+  //     throw new Error("Unknown account");
+  //   }
+  // const onchainAuthTransaction = await syncWallet.onchainAuthSigningKey();
+  // // Wait till transaction is committed on ethereum.
+  // await onchainAuthTransaction.wait();
+  // As any other kind of transaction, `ChangePubKey` transaction requires fee.
+  // User doesn't have (but can) to specify the fee amount. If omitted, library will query zkSync node for
+  // the lowest possible amount.
+  // const changePubkey = await syncWallet.setSigningKey({
+  //   feeToken: "0xeb8f08a975ab53e34d8a0330e0d34de942c95926",
+  //   ethAuthType: "ECDSA",
+  // });
+
+  // // Wait until the tx is committed
+  // await changePubkey.awaitReceipt();
+  // }
+
+  const amount = "200";
 
   const deposit = await syncWallet.depositToSyncFromEthereum({
     depositTo: syncWallet.address(),
@@ -32,6 +51,7 @@ async function L1toL2() {
   // Completes when the tx reaches finality on Ethereum
   // const depositReceipt2 = await deposit.awaitVerifyReceipt();
   // console.log("done!");
+  console.log(depositReceipt);
 }
 
 L1toL2();
