@@ -1,6 +1,10 @@
 import { isObject } from "lodash";
 import React, { useEffect, useState } from "react";
 
+// import wallet pages
+import CreateWallet from './CreateWallet';
+import ManageWallet from './ManageWallet';
+
 const Web3 = require("web3");
 const crypto = require("crypto");
 const bip39 = require("bip39");
@@ -46,21 +50,13 @@ export default function Wallet(props) {
   console.dir(DecryptWallet(myWallet, "123456789").privateKey);
   if (isObject(myWallet)) {
     console.log("good");
-    return <Button
-    block
-    bsSize="large"
-    type="submit"
-    >
-    Login
-    </Button>
+    return (
+      <ManageWallet></ManageWallet>
+    )
   } else {
     console.log("you need to make a wallet");
-    return <Button
-    block
-    bsSize="large"
-    type="submit"
-    >
-    Login
-    </Button>
+    return (
+      <CreateWallet></CreateWallet>
+    )
   }
 }
