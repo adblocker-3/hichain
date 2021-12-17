@@ -324,8 +324,6 @@ export default function ManageWallet() {
         localStorage.getItem("myWallet"),
         password
       ).privateKey;
-      //   const walletPrivateKey =
-      // "87fd3fda64b1e556daf32d0d60daae262bcbb511fe026afcf088ead06cc850c6";
       console.log(walletAddress);
       console.log(walletPrivateKey);
       const syncProvider = await zksync.getDefaultProvider("rinkeby");
