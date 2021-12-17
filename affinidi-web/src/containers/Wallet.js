@@ -39,8 +39,6 @@ const mnemonic = CreateMnemonic();
 const wallet = NewWalletFromMnemonic(mnemonic);
 const encrypted = EncryptWallet(wallet, "123456789");
 localStorage.setItem("myWallet", JSON.stringify(encrypted));
-console.log(encrypted);
-console.log(typeof encrypted);
 export default function Wallet(props) {
   let myWallet = localStorage.getItem("myWallet");
   myWallet = JSON.parse(myWallet);
@@ -48,8 +46,21 @@ export default function Wallet(props) {
   console.dir(DecryptWallet(myWallet, "123456789").privateKey);
   if (isObject(myWallet)) {
     console.log("good");
+    return <Button
+    block
+    bsSize="large"
+    type="submit"
+    >
+    Login
+    </Button>
   } else {
     console.log("you need to make a wallet");
+    return <Button
+    block
+    bsSize="large"
+    type="submit"
+    >
+    Login
+    </Button>
   }
-  return <div></div>;
 }

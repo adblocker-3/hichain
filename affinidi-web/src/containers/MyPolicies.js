@@ -1,10 +1,15 @@
 import React from 'react';
+import "./MyPolicies.styled";
+import Title from './MyPolicies.styled';
+
 
 export default function MyPolicies() {
     return (
         <div>
             <ul>
-                <div>Life Insurance</div>
+                <Title>
+                    Life Insurance
+                </Title>
                 <li>Policy Number: </li>
                 <li>Status: </li>
                 <li>Premium Amount: </li>
@@ -13,7 +18,9 @@ export default function MyPolicies() {
             </ul>
             <br></br>
             <ul>
-                <div>Critical Illness</div>
+                <Title>
+                    Critical Illness
+                </Title>
                 <li>Policy Number: </li>
                 <li>Status: </li>
                 <li>Premium Amount: </li>

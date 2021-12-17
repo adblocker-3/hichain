@@ -3,7 +3,7 @@ import { Tabs, Tab, TabPanel, TabList } from 'react-web-tabs';
 import 'react-web-tabs/dist/react-web-tabs.css';
 import MyPolicies from './MyPolicies';
 import AddOns from './AddOns';
-import "./Home.css";
+import "./MyPolicies.styled";
 
 function Policies(){
     return(
