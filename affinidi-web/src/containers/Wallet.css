@@ -1,0 +1,45 @@
+@media all and (min-width: 480px) {
+    .U1 {
+      font-family: Poppins, sans-serif;
+      font-style: normal;
+      list-style-type:none;
+      font-size: 24px;
+      text-align: center;
+      width: 50%; 
+      background-color: #FFFFFF;
+      padding: 35px;
+    }
+    .U1 .Box {
+      display:run-in;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      background-color: #FFFFFF;
+      padding: 35px;
+      max-width: 50%;
+      margin: 0 auto;
+      border-radius: 20px;
+    }
+    .primary-button {
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        background: #3c21f1;
+        border-radius: 8px;
+        margin-top: 0px;
+        margin-right: 15px;
+        max-width:fit-content;
+    }
+    .primary-button:hover {
+        background: #29039b;
+        color: beige;
+    }
+    .centered {
+      display:run-in;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      background-color: #FFFFFF;
+      padding: 35px;
+      margin: 0 auto;
+      border-radius: 20px;
+      max-width: fit-content;
+    }
+  
+}

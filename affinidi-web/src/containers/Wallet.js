@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 // import wallet pages
 import CreateWallet from "./CreateWallet";
 import ManageWallet from "./ManageWallet";
+import "./Wallet.css"
+
 
 const Web3 = require("web3");
 const crypto = require("crypto");
@@ -49,4 +51,5 @@ export default function Wallet(props) {
     console.log("you need to make a wallet");
     return <CreateWallet></CreateWallet>;
   }
+  
 }

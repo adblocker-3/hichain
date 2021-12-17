@@ -7,6 +7,8 @@ import {
   EncryptWallet,
   DecryptWallet,
 } from "./Wallet";
+import "./Wallet.css"
+
 const zksync = require("zksync");
 const Web3 = require("web3");
 const ethers = require("ethers");
@@ -346,7 +348,8 @@ export default function ManageWallet() {
   };
 
   return (
-    <div>
+    <div className="U1">
+      <div className="Box">
       <h3>L1 Balance ETH: {L1balanceETH}</h3>
       <h3>L1 Balance USDC: {L1balanceUSDC}</h3>
       <button className="primary-button" onClick={showingaddress}>
@@ -386,7 +389,9 @@ export default function ManageWallet() {
           ></Input.Password>
         </>
       )}
-      <br></br>
+      </div>
+      <br></br>      
+      <div className="Box">
       <h3>L2 Balance: {L2balance}</h3>
       <button className="primary-button" onClick={showValueBoxEvent}>
         Top-Up
@@ -420,6 +425,7 @@ export default function ManageWallet() {
           ></Input>
         </>
       )}
+      </div>
     </div>
   );
 }

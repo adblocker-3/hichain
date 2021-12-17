@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { ReactDOM } from "react-dom";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import "./Wallet.css"
 
 // import from Wallet
 import {
@@ -63,10 +64,10 @@ export default function CreateWallet(props) {
   return (
     <div>
       {!(showMnemonic || showPassword || showImportMnemonic) && (
-        <>
+        <div className="centered">
           <Button onClick={creatingmnemonic}>Create Wallet</Button>
           <Button onClick={importingmnemonic}>Import Wallet</Button>
-        </>
+        </div>
       )}
 
       {showMnemonic && (
