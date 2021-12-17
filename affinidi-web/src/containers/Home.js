@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import "./Home.css";
 import queryString from "query-string";
 import CredentialTable from "../vendors/CredentialTable";
+import axios from "axios"
 
 class ValidatableCredential {
     constructor(credential, status = undefined, errorMessage = "") {
@@ -18,7 +19,7 @@ class Home extends Component {
         const { processToken } = queryString.parse(this.props.location.search);
 
         this.state = {
-            isLoading: false,
+            isLoading: true,
             isDeleteModalShown: false,
             areCredentialDetailsShown: false,
             credentials: [],
@@ -39,13 +40,19 @@ class Home extends Component {
     async componentDidMount() {
         try {
             console.log("component did mount");
-            const { did, credentials } =
-                await window.sdk.getDidAndCredentials();
-            this.props.userHasAuthenticated(true);
-            const verifiableCredentials =
-                this.makeVerifiableCredentials(credentials);
+            // const { did, credentials } =
+            //     await window.sdk.getDidAndCredentials();
 
-            this.setState({ did, credentials, verifiableCredentials });
+            // const verifiableCredentials =
+            //     this.makeVerifiableCredentials(credentials);
+            axios.get("http://hichain.bawfen.com/credentials").then((resp) => {
+                const verifiableCredentials = resp.data
+                const credentials = resp.data
+                this.setState({ verifiableCredentials, credentials })
+                this.props.userHasAuthenticated(true);
+                this.setState({ isLoading: false })
+            })
+            // this.setState({ did, credentials, verifiableCredentials });
         } catch (error) {
             this.props.userHasAuthenticated(false);
             this.props.history.push("/login");
@@ -53,7 +60,7 @@ class Home extends Component {
     }
 
     render() {
-        const { verifiableCredentials } = this.state;
+        const { verifiableCredentials, isLoading } = this.state;
         const haveCredentials =
             verifiableCredentials && verifiableCredentials.length > 0;
         const { isAuthenticated } = this.props;
@@ -62,18 +69,21 @@ class Home extends Component {
             <Fragment>
                 <div className="Home">
                     <form className="Form container">
-                        <h1 className="Title">Wallet</h1>
-                        {isAuthenticated && haveCredentials ? (
-                            <div className="Credentials">
-                                <CredentialTable
-                                    credentials={verifiableCredentials}
-                                />
-                            </div>
-                        ) : (
-                            <p>You have no credentials.</p>
-                        )}
+                        <h1 className="Title">Verifiable Credentials</h1>
+                        {!isLoading ?
+                            <div>{isAuthenticated && haveCredentials ? (
+                                <div className="Credentials">
+                                    <CredentialTable
+                                        credentials={verifiableCredentials}
+                                    />
+                                </div>
+                            ) : (
+                                <p>You have no credentials.</p>
+                            )}</div> :
+                            <p>Loading...</p>
+                        }
                     </form>
-                </div>                
+                </div>
             </Fragment>
         );
     }

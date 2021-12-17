@@ -2,14 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap'
 import { unset } from 'lodash-es'
 
-const CredentialTable = ({ credentials }) =>
-{
+const CredentialTable = ({ credentials }) => {
   const [vcData, setVCData] = useState([]);
 
-  useEffect(() =>
-  {
-    const removeProp = (obj, propToDelete) =>
-    {
+  useEffect(() => {
+    const removeProp = (obj, propToDelete) => {
       for (let property in obj) {
         if (obj.hasOwnProperty(property)) {
           if (property === propToDelete) {
@@ -22,12 +19,15 @@ const CredentialTable = ({ credentials }) =>
       return obj
     }
 
-    const initialiseVCData = (vcData) =>
-    {
+    const initialiseVCData = (vcData) => {
       let processedVCData = []
       for (let vc in vcData) {
-        processedVCData[parseInt(vc)] = vcData[parseInt(vc)].credential.credentialSubject.data
-        processedVCData[parseInt(vc)] = removeProp(processedVCData[parseInt(vc)], '@type')
+        // console.log(vc)
+        if (vcData[parseInt(vc)].credentialSubject.data.medicalCondition) {
+          processedVCData[parseInt(vc)] = vcData[parseInt(vc)].credentialSubject.data
+          processedVCData[parseInt(vc)] = removeProp(processedVCData[parseInt(vc)], '@type')
+        }
+
       }
       return processedVCData
     }
@@ -35,8 +35,7 @@ const CredentialTable = ({ credentials }) =>
     setVCData(initialiseVCData(credentials))
   }, [credentials])
 
-  const extractEmailFromIDDocument = (cred) =>
-  {
+  const extractEmailFromIDDocument = (cred) => {
     if (cred.hasIDDocument) {
       return JSON.parse(cred.hasIDDocument.hasIDDocument.idClass).email
     } else {
@@ -48,24 +47,28 @@ const CredentialTable = ({ credentials }) =>
     <Table bordered>
       <thead className="thead-light">
         <tr>
-          <th>Index</th>
+          {/* <th>Index</th> */}
           <th>Given Name</th>
           <th>Family Name</th>
           <th>Email</th>
           <th>VC Type</th>
+          <th>Medical Condition</th>
+          <th>Issue Date</th>
         </tr>
       </thead>
       <tbody>
         {
-          vcData.map((cred, index) =>
-          {
+          vcData.map((cred, index) => {
+            // console.log(cred)
             return (
               <tr key={index + 1}>
-                <th scope='row'>{index + 1}</th>
+                {/* <th scope='row'>{index + 1}</th> */}
                 <td>{cred.givenName || cred.name}</td>
                 <td>{cred.familyName || ''}</td>
                 <td>{cred.email || extractEmailFromIDDocument(cred) || ''}</td>
                 <td>{cred.hasIDDocument ? cred.hasIDDocument.hasIDDocument.documentType : 'ID Document'}</td>
+                <td>{cred.medicalCondition}</td>
+                <td>{cred.hasIDDocument.hasIDDocument.issueDate}</td>
               </tr>
             )
           })
