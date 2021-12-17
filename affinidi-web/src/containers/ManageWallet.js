@@ -7,7 +7,7 @@ import {
   EncryptWallet,
   DecryptWallet,
 } from "./Wallet";
-import "./Wallet.css"
+import "./Wallet.css";
 
 const zksync = require("zksync");
 const Web3 = require("web3");
@@ -229,6 +229,7 @@ const contract_abi = [
 
 const tokenAddress = "0xeb8f08a975ab53e34d8a0330e0d34de942c95926";
 const walletAddress = localStorage.getItem("myWalletPublic");
+// const walletAddress = "0x1173f173F5A86BCDA22c74F78463BD5899EaecA1"
 const contract = new Web3Client.eth.Contract(contract_abi, tokenAddress);
 
 async function getBalance() {
@@ -323,6 +324,8 @@ export default function ManageWallet() {
         localStorage.getItem("myWallet"),
         password
       ).privateKey;
+      //   const walletPrivateKey =
+      // "87fd3fda64b1e556daf32d0d60daae262bcbb511fe026afcf088ead06cc850c6";
       console.log(walletAddress);
       console.log(walletPrivateKey);
       const syncProvider = await zksync.getDefaultProvider("rinkeby");
@@ -350,81 +353,81 @@ export default function ManageWallet() {
   return (
     <div className="U1">
       <div className="Box">
-      <h3>L1 Balance ETH: {L1balanceETH}</h3>
-      <h3>L1 Balance USDC: {L1balanceUSDC}</h3>
-      <button className="primary-button" onClick={showingaddress}>
-        Deposit
-      </button>
-      <button className="primary-button" onClick={showingwithdrawal}>
-        Withdraw
-      </button>
-      {showPublicAddress && <div>My public address: {walletAddress}</div>}
-      {showTransferAmount && (
-        <>
-          <Input
-            placeholder="Input amount of USDC to send"
-            onChange={(event) => setTransferAmount(event.target.value)}
-            onPressEnter={(event) => handleTransferAmount()}
-          ></Input>
-        </>
-      )}
-      {show2ndAddress && (
-        <>
-          <Input
-            placeholder="Input address to send to"
-            onChange={(event) => set2ndAddress(event.target.value)}
-            onPressEnter={(event) => handle_2ndaddress()}
-          ></Input>
-        </>
-      )}
-      {showPassword2 && (
-        <>
-          <Input.Password
-            placeholder="Type your wallet password"
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-            onChange={(event) => setPassword(event.target.value)}
-            onPressEnter={(event) => Transaction()}
-          ></Input.Password>
-        </>
-      )}
+        <h3>L1 Balance ETH: {L1balanceETH}</h3>
+        <h3>L1 Balance USDC: {L1balanceUSDC}</h3>
+        <button className="primary-button" onClick={showingaddress}>
+          Deposit
+        </button>
+        <button className="primary-button" onClick={showingwithdrawal}>
+          Withdraw
+        </button>
+        {showPublicAddress && <div>My public address: {walletAddress}</div>}
+        {showTransferAmount && (
+          <>
+            <Input
+              placeholder="Input amount of USDC to send"
+              onChange={(event) => setTransferAmount(event.target.value)}
+              onPressEnter={(event) => handleTransferAmount()}
+            ></Input>
+          </>
+        )}
+        {show2ndAddress && (
+          <>
+            <Input
+              placeholder="Input address to send to"
+              onChange={(event) => set2ndAddress(event.target.value)}
+              onPressEnter={(event) => handle_2ndaddress()}
+            ></Input>
+          </>
+        )}
+        {showPassword2 && (
+          <>
+            <Input.Password
+              placeholder="Type your wallet password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onChange={(event) => setPassword(event.target.value)}
+              onPressEnter={(event) => Transaction()}
+            ></Input.Password>
+          </>
+        )}
       </div>
-      <br></br>      
+      <br></br>
       <div className="Box">
-      <h3>L2 Balance: {L2balance}</h3>
-      <button className="primary-button" onClick={showValueBoxEvent}>
-        Top-Up
-      </button>
-      <button className="primary-button" onClick={showValueBoxEvent}>
-        Withdraw
-      </button>
-      <button className="primary-button" onClick={showingbalance}>
-        Show Balance
-      </button>
-      {showPassword && (
-        <>
-          <Input.Password
-            placeholder="Type your wallet password"
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-            onChange={(event) => setPassword(event.target.value)}
-            onPressEnter={(event) => showL2balance()}
-          ></Input.Password>
-        </>
-      )}
-      {showValueBox && (
-        <>
-          <Input
-            placeholder="Enter Amount of USDC"
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-            onPressEnter={(event) => USDCevent()}
-          ></Input>
-        </>
-      )}
+        <h3>L2 Balance: {L2balance}</h3>
+        <button className="primary-button" onClick={showValueBoxEvent}>
+          Top-Up
+        </button>
+        <button className="primary-button" onClick={showValueBoxEvent}>
+          Withdraw
+        </button>
+        <button className="primary-button" onClick={showingbalance}>
+          Show Balance
+        </button>
+        {showPassword && (
+          <>
+            <Input.Password
+              placeholder="Type your wallet password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onChange={(event) => setPassword(event.target.value)}
+              onPressEnter={(event) => showL2balance()}
+            ></Input.Password>
+          </>
+        )}
+        {showValueBox && (
+          <>
+            <Input
+              placeholder="Enter Amount of USDC"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onPressEnter={(event) => USDCevent()}
+            ></Input>
+          </>
+        )}
       </div>
     </div>
   );
