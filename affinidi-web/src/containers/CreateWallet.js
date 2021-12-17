@@ -71,8 +71,9 @@ export default function CreateWallet(props) {
       )}
 
       {showMnemonic && (
-        <>
-          <div>Your Mnemonic seed:</div>
+        <div className="H1">
+          <div className="U2">
+          <div className="U3"> Your Mnemonic seed: </div>
           <div>{GENERATEDmnemonic}</div>
           <Input
             placeholder="Confirm Your Mnemonic"
@@ -80,7 +81,8 @@ export default function CreateWallet(props) {
             onPressEnter={(event) => confirmmnemonic()}
           />
           {retry && <div>please input your mnemonic seed properly</div>}
-        </>
+          </div>
+        </div>
       )}
       {showImportMnemonic && (
         <>
